@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EasyGo - Your Journey, Made Easy.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="#beranda" class="brand" data-page="beranda" aria-label="EasyGo, ke Beranda">
+      <svg width="36" height="36" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="11" fill="#5B9DF0"/><path d="M7 20.5 25.5 9l-4.2 16-5-4.6-3 2.8-.4-4.6z" fill="#fff"/><circle cx="26" cy="25" r="3.2" fill="#FF7F6B"/></svg>
+      <span>Easy<b>Go</b></span>
+    </a>
+    <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="links" id="links">
+      <a href="#beranda" data-page="beranda">Beranda</a>
+      <a href="#hasil" data-page="hasil">Cari Tiket</a>
+      <a href="#riwayat" data-page="riwayat">Riwayat Pemesanan</a>
+      <a href="#tentang" data-page="tentang">Tentang</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ============ BERANDA ============ -->
+<section id="page-beranda" class="page on">
+  <div class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-text">
+        <p class="tag">Your Journey, Made Easy.</p>
+        <h1>Temukan Perjalanan Impianmu Bersama EasyGo</h1>
+        <p class="sub">Cari, bandingkan, dan pesan tiket pesawat, kereta api, dan bus dalam satu tempat. Mudah, cepat, dan menyenangkan.</p>
+        <button class="btn orange big" id="ctaCari" type="button">Cari Tiket Sekarang</button>
+      </div>
+      <div class="hero-art" id="heroArt" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <form id="homeForm" class="search-card" novalidate>
+      <div class="seg" id="homeJenis" role="group" aria-label="Jenis transportasi"></div>
+      <div class="seg" id="homeTrip" role="group" aria-label="Jenis perjalanan"></div>
+      <div class="fields">
+        <label><span class="lb" id="h-asal-lb"></span><select id="h-asal" aria-label="Kota asal"></select></label>
+        <label><span class="lb" id="h-tujuan-lb"></span><select id="h-tujuan" aria-label="Kota tujuan"></select></label>
+        <label>Tanggal berangkat<input type="date" id="h-tanggal"></label>
+        <label id="h-pulang-wrap" hidden>Tanggal pulang<input type="date" id="h-pulang"></label>
+        <label>Jumlah penumpang<input type="number" id="h-pnp" min="1" max="10" value="1"></label>
+        <button class="btn primary big" type="submit">Cari Tiket</button>
+      </div>
+      <p class="err" id="h-err" role="alert"></p>
+    </form>
+
+    <section class="block">
+      <h2>Pilih jenis perjalanan</h2>
+      <div class="cats" id="cats"></div>
+    </section>
+
+    <section class="block">
+      <div class="row-between"><div><h2>Destinasi populer</h2>
+      <p class="muted">Harga mulai dari dihitung dari tiket yang tersedia.</p></div>
+      <div class="chips" id="destFilter"></div></div>
+      <div class="recs" id="recs"></div>
+    </section>
+  </div>
+</section>
+
+<!-- ============ HASIL PENCARIAN ============ -->
+<section id="page-hasil" class="page">
+  <div class="wrap">
+    <div class="page-head"><h1>Cari Tiket</h1><p class="muted" id="hasilInfo"></p></div>
+    <div class="filter-card">
+      <label>Jenis<select id="rf-jenis"></select></label>
+      <label id="rf-trip-wrap">Perjalanan<select id="rf-trip"><option value="1">Sekali jalan</option><option value="2">Pulang pergi</option></select></label>
+      <label><span class="lb" id="rf-asal-lb"></span><select id="rf-asal" aria-label="Kota asal"></select></label>
+      <label><span class="lb" id="rf-tujuan-lb"></span><select id="rf-tujuan" aria-label="Kota tujuan"></select></label>
+      <label>Tanggal berangkat<input type="date" id="rf-tanggal"></label>
+      <label id="rf-pulang-wrap" hidden>Tanggal pulang<input type="date" id="rf-pulang"></label>
+      <label>Penumpang<input type="number" id="rf-pnp" min="1" max="10" value="1"></label>
+      <label>Harga maksimal: <b id="rf-hargaTxt"></b><input type="range" id="rf-harga" min="250000" max="15000000" step="250000" value="15000000"></label>
+      <label>Urutkan<select id="rf-urut">
+        <option value="harga-asc">Harga termurah</option>
+        <option value="harga-desc">Harga termahal</option>
+        <option value="berangkat-asc">Keberangkatan paling awal</option>
+        <option value="durasi-asc">Durasi tercepat</option></select></label>
+      <button class="btn ghost" id="rf-reset" type="button">Atur ulang</button>
+    </div>
+    <p class="err" id="rf-err" role="alert"></p>
+    <div id="hasilList" class="tk-list"></div>
+    <p class="note">Jadwal berlaku harian, jadi tanggal yang kamu pilih menjadi tanggal keberangkatan. Jam tiba dihitung dari durasi perjalanan dan belum memperhitungkan perbedaan zona waktu.</p>
+  </div>
+</section>
+
+<!-- ============ RIWAYAT ============ -->
+<section id="page-riwayat" class="page">
+  <div class="wrap">
+    <div class="page-head row-between"><div><h1>Riwayat Pemesanan</h1><p class="muted">Tersimpan di browser ini dan tetap ada setelah halaman dimuat ulang.</p></div>
+      <button class="btn ghost" id="hapusRiwayat" type="button">Hapus semua riwayat</button></div>
+    <div id="riwayatList"></div>
+  </div>
+</section>
+
+<!-- ============ TENTANG ============ -->
+<section id="page-tentang" class="page">
+  <div class="wrap narrow">
+    <div class="page-head"><h1>Tentang EasyGo</h1><p class="muted">Your Journey, Made Easy.</p></div>
+    <div class="about">
+      <div class="card"><h3>Apa itu EasyGo?</h3><p>EasyGo adalah website pemesanan tiket pesawat, kereta api, dan bus. Bandingkan jadwal dan harga dari berbagai operator, lalu pesan dalam hitungan menit.</p></div>
+      <div class="card"><h3>Yang bisa kamu lakukan</h3><ul><li>Mencari dan menyaring tiket</li><li>Mengurutkan berdasarkan harga, jam, dan durasi</li><li>Memesan tiket dan mendapat kode booking</li><li>Melihat riwayat dan membatalkan pesanan</li></ul></div>
+      <div class="card"><h3>Rute yang tersedia</h3><p>Pesawat melayani rute dalam negeri dan penerbangan ke berbagai benua. Kereta api dan bus melayani rute antarkota di Indonesia.</p></div>
+      <div class="card"><h3>Riwayat pemesanan</h3><p>Riwayat disimpan di browser perangkatmu (localStorage), tidak dikirim ke server mana pun.</p></div>
+      <div class="card fill"><h3>Identitas tim (isi sendiri)</h3><p>Nama: ...............................<br>NIM: ................................<br>Kelas / Kampus: ..............................<br>Dosen pengampu: ..............................</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <div class="brand light"><svg width="30" height="30" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="11" fill="#fff"/><path d="M7 20.5 25.5 9l-4.2 16-5-4.6-3 2.8-.4-4.6z" fill="#5B9DF0"/><circle cx="26" cy="25" r="3.2" fill="#FF7F6B"/></svg><span>Easy<b>Go</b></span></div>
+      <p>Pesan tiket pesawat, kereta api, dan bus dalam satu tempat.</p>
+    </div>
+    <div class="foot-links"><a href="#beranda" data-page="beranda">Beranda</a><a href="#hasil" data-page="hasil">Cari Tiket</a><a href="#riwayat" data-page="riwayat">Riwayat</a><a href="#tentang" data-page="tentang">Tentang</a></div>
+    <p class="foot-note">&copy; EasyGo. Your Journey, Made Easy.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <button class="x" data-close aria-label="Tutup">&times;</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+<div id="toasts" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
